@@ -1,0 +1,22 @@
+version: "2.2"
+
+services:
+  web:
+    build: ./
+    # image: php:8.0-apache
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - ./src:/var/www/html
+
+  database:
+    image: mysql:5
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Teste
+    ports:
+      - "3306:3306"
+    restart: always
