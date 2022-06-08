@@ -43,8 +43,9 @@
   <body>
     <script src="static/js/jquery.js"></script>
 
-    <form method="post" id="login" action="">
+    <form method="post" id="login" action="/pesquisa_usuarios">
       <img id="logo-cliente" class="w3-margin-top" src="static/imagens/logo_cliente.jpg"/>
+      <?php if($invalidForm){echo"<p style='color:red'>Login Inválido </p>";} ?>
       <input name="user" class="w3-input w3-border w3-margin-top" type="text" placeholder="Usuário">
       <input name="pass" class="w3-input w3-border w3-margin-top" type="password" placeholder="Senha">
       <input name="submit" type="submit" value="Logar" class="w3-button w3-theme w3-margin-top w3-block"></input>

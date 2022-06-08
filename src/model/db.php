@@ -18,22 +18,18 @@
 class Conexao {
     private static $conexao;
 
-    private static $host;
+    private static $host = "database";
 
-    private static $port;
+    private static $port = "3306";
 
-    private static $database;
+    private static $database = "Teste";
 
-    private static $username;
+    private static $username = "root";
 
-    private static $password;
+    private static $password = "root";
 
     private function  __construct($host, $port, $database, $username, $password){
-        self::$host = $host;
-        self::$port = $port;
-        self::$database = $database;
-        self::$username = $username;
-        self::$username = $password;
+
     }
 
     public static function getInstance(){
@@ -44,4 +40,5 @@ class Conexao {
     }
 
 }
+
 
