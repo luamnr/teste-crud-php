@@ -5,7 +5,7 @@ services:
     build: ./DockerfileWeb
     # image: php:8.0-apache
     ports:
-      - "80:80"
+      - "54322:80"
     restart: always
     volumes:
       - ./src:/var/www/html
@@ -18,5 +18,5 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: Teste
     ports:
-      - "3306:3306"
+      - "33066:3306"
     restart: always
