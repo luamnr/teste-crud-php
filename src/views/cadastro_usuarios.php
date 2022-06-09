@@ -5,9 +5,6 @@
   <div>
     <form method="post"  id="lista_usuarios" <?php if ($array["editar"]){echo"action='editar_usuarios?id=". $array[0]["USUARIO_ID"] ."'";} ?> class="w3-margin">
 
-      <?php var_dump($array[0]);
-            echo "<br>";
-      ?>
       <h4>Cadastro de usuários</h4>
 
       <div>

@@ -117,4 +117,37 @@ class Usuario {
         $declaracao = $con->prepare("DELETE FROM usuarios WHERE USUARIO_ID = ? ;");
         $declaracao->execute([$id]);
     }
+
+    /**
+    * Função para deletar um usuário pelo seu id
+    * @param String $nome
+    * @return Array	
+    */
+    public static function getLike($nome){
+        $searchString = $nome . "%";
+        $con = Conexao::getInstance();
+        $declaracao = $con->prepare("SELECT * FROM usuarios WHERE LOGIN LIKE ? or NOME_COMPLETO LIKE ? ;");
+        $declaracao->execute([$searchString, $searchString]);
+        $retorno = $declaracao->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($retorno){
+            return $retorno;
+        }
+
+        return FALSE;
+    }
+
+    public static function getAtivo($login){
+        $con = Conexao::getInstance();
+        $declaracao = $con->prepare("SELECT ATIVO FROM usuarios WHERE LOGIN = ? ;");
+        $declaracao->execute([$login]);
+        $retorno = $declaracao->fetch(PDO::FETCH_ASSOC);
+
+        if ($retorno){
+            return $retorno;
+        }
+
+        return FALSE;
+    }
+
 }

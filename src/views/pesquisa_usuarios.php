@@ -18,8 +18,12 @@
     <script src="static/js/jquery.js"></script>
     <div>
       <div id="lista_usuarios" class="w3-margin">
-        <input class="w3-input w3-border w3-margin-top" type="text" placeholder="Nome">
-        <button class="w3-button w3-theme w3-margin-top">Buscar</button>
+
+        <form method="get" action="/pesquisa_usuarios">
+          <input name="busca" class="w3-input w3-border w3-margin-top" type="text" placeholder="Nome">
+          <button type="submit" class="w3-button w3-theme w3-margin-top">Buscar</button>
+        </form>
+        <a href="/pesquisa_usuarios" class="w3-button w3-theme w3-margin-top">Limpar</a>
         <a href='/logout' style='margin-left: 1%;'class='w3-button w3-theme w3-margin-top w3-right'>Deslogar</a>
         <a href="/cadastro_usuarios" class="w3-button w3-theme w3-margin-top w3-right">Cadastrar novo usuário</a>
 
@@ -34,6 +38,7 @@
           </thead>
           <tbody>
             <?php
+
               foreach ($array as $arr){
                 echo "<tr>";
                   echo "<td>".$arr["NOME_COMPLETO"]."</td>";

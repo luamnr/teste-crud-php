@@ -38,13 +38,22 @@ class UsuarioController extends Controller{
     * @return Void	
     */
     private function authenticate($login, $pass){
-        if (self::loginIsValid($login, $pass)){
+        $msg = "Login inválido";
+
+        $invalid = FALSE;
+        if (Usuario::getAtivo($login)["ATIVO"] == "N"){
+            $invalid = TRUE;    
+            $msg = "Usuário desativado";
+        }
+
+        if (self::loginIsValid($login, $pass) and !$invalid){
             $_SESSION["authenticated"] = TRUE;
             // se tiver valido autentique e chame a proxima view
             self::listUsersView();
             return;
         }
-        self::render("index", ["invalidForm"=>TRUE]);
+
+        self::render("index", ["invalidForm"=>$msg]);
     }
 
     /**
@@ -79,12 +88,17 @@ class UsuarioController extends Controller{
     */
     public static function listUsersView($params=null){
         if (!self::isAuthenticated()){
-            self::render("index", ["invalidForm"=>TRUE]);
+            self::render("index", ["invalidForm"=>"Login inválido"]);
             return;
         }
 
-        $todosUsuarios = Usuario::getAll();
-        self::render("pesquisa_usuarios" , $todosUsuarios);
+        if ($params["busca"]){
+            $usuarios = Usuario::getLike($params["busca"]);
+        }else{
+            $usuarios = Usuario::getAll();
+        }
+
+        self::render("pesquisa_usuarios" , $usuarios);
     }
 
     /**
@@ -94,7 +108,7 @@ class UsuarioController extends Controller{
     */
     public static function createUserView($params=null){
         if (!self::isAuthenticated()){
-            self::render("index", ["invalidForm"=>TRUE]);
+            self::render("index", ["invalidForm"=>"Login inválido"]);
             return;
         }
 
@@ -118,7 +132,10 @@ class UsuarioController extends Controller{
         
             $id = Usuario::create($nome, $user, $pass, $status);
         
-            Autorizacao::create($id, $authorization);
+            if ($authorization){
+                Autorizacao::create($id, $authorization);
+            }
+
             self::listUsersView();
         }
     }
@@ -131,7 +148,7 @@ class UsuarioController extends Controller{
     public static function userDetailView($params=null){
 
         if (!self::isAuthenticated()){
-            self::render("index", ["invalidForm"=>TRUE]);
+            self::render("index", ["invalidForm"=>"Login inválido"]);
             return;
         }
 
@@ -152,8 +169,11 @@ class UsuarioController extends Controller{
             $status = $_POST["status"];
         
             Usuario::editById($id ,$nome, $user, $pass, $status);
-            Autorizacao::deleteById($id);
-            Autorizacao::create($id, $authorization);
+            if ($authorization){
+                Autorizacao::deleteById($id);
+                Autorizacao::create($id, $authorization);
+            }
+
             self::listUsersView();
         }
     }
@@ -165,7 +185,7 @@ class UsuarioController extends Controller{
     */
     public static function userDeleteView($params){
         if (!self::isAuthenticated()){
-            self::render("index", ["invalidForm"=>TRUE]);
+            self::render("index", ["invalidForm"=>"Login inválido"]);
             return;
         }
         
