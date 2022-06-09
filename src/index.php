@@ -1,28 +1,41 @@
 <?php
 
-echo $_SESSION;
+
 if (!$_SESSION){
     session_start();
 }
 
-require __DIR__. "/controler/controler.php";
+require __DIR__. "/controller/usuariocontroller.php";
 
 
-$request = $_SERVER['REQUEST_URI'];
+$request = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+if ($_GET){
+    $params =  $_GET;
+}
+else{
+    $params = null;
+}
+
 
 switch ($request) {
     case '/' :
-        Controler::loginView();
+        UsuarioController::loginView();
         break;
-    case 'cadastro_usuarios' :
-        require __DIR__ . '/views/index.php';
+    case '/logout' :
+        UsuarioController::logoutView($params);
         break;
-    case '/pesquisa_usuarios' :
-        Controler::listUsersView();
+    case '/cadastro_usuarios' :
+        UsuarioController::createUserView($params);
+        break;
+    case "/pesquisa_usuarios":
+        UsuarioController::listUsersView($params);
+        break;
+    case "/deletar_usuarios":
+        UsuarioController::userDeleteView($params);
         break;
     default:
         http_response_code(404);
-        require __DIR__ . '/views/404.html';
+        require __DIR__ . '/views/404.php';
         break;
 }
 

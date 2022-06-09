@@ -2,7 +2,7 @@ version: "2.2"
 
 services:
   web:
-    build: ./
+    build: ./DockerfileWeb
     # image: php:8.0-apache
     ports:
       - "80:80"

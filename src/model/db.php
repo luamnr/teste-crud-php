@@ -1,19 +1,4 @@
-
 <?php
-
-// $host = "database";
-// $port = 3306;
-// $database = "Teste";
-// $username = "root";
-// $password = "root";
-
-// try {
-//     $conn = new PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
-//     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// }
-// catch(PDOException $error){
-//     echo "Error: ".$error->getMessage();
-// }
 
 class Conexao {
     private static $conexao;
@@ -28,13 +13,14 @@ class Conexao {
 
     private static $password = "root";
 
-    private function  __construct($host, $port, $database, $username, $password){
-
-    }
-
+    /**
+    * Pegar instancia da classe conexão
+    * @return Instance	
+    */
     public static function getInstance(){
         if (is_null(self::$conexao)){
             self::$conexao = new PDO("mysql:host=".self::$host.";port=".self::$port.";dbname=".self::$database, self::$username, self::$password);
+            self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return self::$conexao;
     }

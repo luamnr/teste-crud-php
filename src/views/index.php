@@ -1,24 +1,6 @@
+<?php include "header.php";?>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-    <title>santri</title>
-
-    <link rel="stylesheet" href="static/css/w3.css">
-    <link rel="stylesheet" href="static/css/santri.css">
-    <link rel="stylesheet" href="static/css/toastr.css">
-
-    <link rel="stylesheet" href="static/css-awesome/brands.css">
-    <link rel="stylesheet" href="static/css-awesome/fontawesome.css">
-    <link rel="stylesheet" href="static/css-awesome/regular.css">
-    <link rel="stylesheet" href="static/css-awesome/solid.css">
-    <link rel="stylesheet" href="static/css-awesome/svg-with-js.css">
-    <link rel="stylesheet" href="static/css-awesome/v4-shims.css">
-
-    <style>
+  <style>
       #login {
         max-width: 95%;
         margin: auto;
@@ -38,12 +20,10 @@
         width: 380px;    
       }
     </style>
-
-  </head>
   <body>
     <script src="static/js/jquery.js"></script>
 
-    <form method="post" id="login" action="/pesquisa_usuarios">
+    <form method="post" id="login" action="/">
       <img id="logo-cliente" class="w3-margin-top" src="static/imagens/logo_cliente.jpg"/>
       <?php if($invalidForm){echo"<p style='color:red'>Login Inválido </p>";} ?>
       <input name="user" class="w3-input w3-border w3-margin-top" type="text" placeholder="Usuário">
@@ -54,5 +34,7 @@
         <img id="logo-santri" class="w3-right w3-margin-top" src="static/imagens/logo_santri.svg"/>
       </a>
     </form>
+
+
   </body>
 </html>
