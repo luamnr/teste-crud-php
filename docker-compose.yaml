@@ -2,17 +2,21 @@ version: "2.2"
 
 services:
   web:
-    build: ./phpdockerfile
+    build: 
+      context: ./
+      dockerfile: ./Dockerfileweb
     # image: php:8.0-apache
     ports:
       - "54322:80"
     restart: always
     volumes:
-      - ./web:/var/www/html
+      - ./src:/var/www/html
 
   database:
     # image: mysql:5
-    build: ./mysqldockerfile
+    build: 
+      context: ./
+      dockerfile: ./Dockerfiledb
     volumes:
       - ./mysql:/var/lib/mysql
     environment:

@@ -5,7 +5,7 @@ class Conexao {
 
     private static $host = "database";
 
-    private static $port = "3306";
+    private static $port = "33066";
 
     private static $database = "Teste";
 
