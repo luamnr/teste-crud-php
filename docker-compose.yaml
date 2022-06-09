@@ -12,7 +12,7 @@ services:
     volumes:
       - ./src:/var/www/html
 
-  database2:
+  db:
     # image: mysql:5
     build: 
       context: ./

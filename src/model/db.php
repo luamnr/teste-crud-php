@@ -3,10 +3,10 @@
 class Conexao {
     private static $conexao;
 
-    private static $host = "teste-php_phpdatabase_1";
+    private static $host = "luam.net.br";
 
     private static $port = "33066";
-
+    
     private static $database = "Teste";
 
     private static $username = "root";
