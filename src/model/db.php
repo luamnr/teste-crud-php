@@ -3,7 +3,7 @@
 class Conexao {
     private static $conexao;
 
-    private static $host = "database";
+    private static $host = "teste-php_phpdatabase_1";
 
     private static $port = "33066";
 
