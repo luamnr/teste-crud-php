@@ -41,7 +41,7 @@
                   echo "<td>".$arr["ATIVO"]."</td>";
                   echo "<td>";
                   echo "<a href='/deletar_usuarios?id=".$arr["USUARIO_ID"]."' class='w3-button w3-theme w3-margin-top'><i class='fas fa-user-times'></i></a> ";
-                  echo "<button class='w3-button w3-theme w3-margin-top'><i class='fas fa-edit'></i></button>";
+                  echo "<a href='/editar_usuarios?id=".$arr["USUARIO_ID"]."' class='w3-button w3-theme w3-margin-top'><i class='fas fa-edit'></i></a>";
                   echo "</td>";
                 echo "</tr>";
               }

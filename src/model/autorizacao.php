@@ -11,12 +11,18 @@ class Autorizacao {
     */
     public static function getByUserId($id){
         $con = Conexao::getInstance();
-        $declaracao = $con->prepare("SELECT * FROM autorizacoes WHERE USUARIO_ID = ? ;");
+        $declaracao = $con->prepare("SELECT CHAVE_AUTORIZACAO FROM autorizacoes WHERE USUARIO_ID = ? ;");
         $declaracao->execute([$id]);
         $retorno = $declaracao->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($retorno){
-            return $retorno;
+        
+        $arr = [];
+        foreach ($retorno as $key => $val) {
+            array_push($arr, $val["CHAVE_AUTORIZACAO"]);
+        }
+
+        if ($arr){
+            return $arr;
         }
 
         return FALSE;
@@ -39,6 +45,12 @@ class Autorizacao {
         }
         $con->commit();
 
+    }
+
+    public static function deleteById($id){
+        $con = Conexao::getInstance();
+        $declaracao = $con->prepare("DELETE FROM autorizacoes WHERE USUARIO_ID = ? ;");
+        $declaracao->execute([$id]);
     }
 
 }

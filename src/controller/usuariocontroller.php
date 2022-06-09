@@ -103,9 +103,15 @@ class UsuarioController extends Controller{
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST"){
-        
-            $nome = $_POST["nome"];
+            
+
             $user = $_POST["user"];
+            if (Usuario::getByUser($user)){
+                self::render("cadastro_usuarios", ["loginExist"=>TRUE]);
+                return;
+            }
+
+            $nome = $_POST["nome"];
             $pass = $_POST["pass"];
             $authorization = $_POST["authorization"];
             $status = $_POST["status"];
@@ -114,7 +120,6 @@ class UsuarioController extends Controller{
         
             Autorizacao::create($id, $authorization);
             self::listUsersView();
-
         }
     }
 
@@ -125,6 +130,32 @@ class UsuarioController extends Controller{
     */
     public static function userDetailView($params=null){
 
+        if (!self::isAuthenticated()){
+            self::render("index", ["invalidForm"=>TRUE]);
+            return;
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] === "GET"){
+            $id = $params["id"];
+            $user = Usuario::getById($id);
+            $auth = Autorizacao::getByUserId($id);
+            self::render("cadastro_usuarios", [$user, $auth,"editar" => TRUE]);
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST"){
+
+            $id = $params["id"];
+            $user = $_POST["user"];
+            $nome = $_POST["nome"];
+            $pass = $_POST["pass"];
+            $authorization = $_POST["authorization"];
+            $status = $_POST["status"];
+        
+            Usuario::editById($id ,$nome, $user, $pass, $status);
+            Autorizacao::deleteById($id);
+            Autorizacao::create($id, $authorization);
+            self::listUsersView();
+        }
     }
 
     /**

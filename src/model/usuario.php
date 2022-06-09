@@ -49,7 +49,7 @@ class Usuario {
         $con = Conexao::getInstance();
         $declaracao = $con->prepare("SELECT * FROM usuarios WHERE USUARIO_ID = ? ;");
         $declaracao->execute([$id]);
-        $retorno = $declaracao->fetchOne(PDO::FETCH_ASSOC);
+        $retorno = $declaracao->fetch(PDO::FETCH_ASSOC);
 
         if ($retorno){
             return $retorno;
@@ -57,6 +57,25 @@ class Usuario {
 
         return FALSE;
     }
+
+    /**
+    * Função para retornar um usuário pelo seu id
+    * @param String $user 
+    * @return Array|FALSE
+    */
+    public static function getByUser($user){
+        $con = Conexao::getInstance();
+        $declaracao = $con->prepare("SELECT * FROM usuarios WHERE LOGIN = ? ;");
+        $declaracao->execute([$user]);
+        $retorno = $declaracao->fetch(PDO::FETCH_ASSOC);
+
+        if ($retorno){
+            return $retorno;
+        }
+
+        return FALSE;
+    }
+
     /**
     * Função para criar um usuário
     * @param String $nome Nome completo
@@ -80,11 +99,12 @@ class Usuario {
     * @param String $user login
     * @param String $pass senha
     * @param String $status (S,N) ativo ou não
-    * @param Array $authorization ("cadastrar_clientes", "excluir_clientes") nível de autorização 
     * @return Void	
     */
-    public static function editById($id, $nome, $user, $pass, $status, $authorization){
-
+    public static function editById($id, $nome, $user, $pass, $status){
+        $con = Conexao::getInstance();
+        $declaracao = $con->prepare("UPDATE usuarios SET NOME_COMPLETO=?, LOGIN=?, SENHA=?, ATIVO=? WHERE USUARIO_ID=?;");
+        $declaracao->execute([$nome, $user, $pass, $status, $id]);
     }
 
     /**
